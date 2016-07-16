@@ -1,0 +1,11 @@
+{
+    "name":        "polonair/smsi",
+    "homepage":    "https://github.com/polonair/smsi",
+    "description": "Smsi Bundle",
+    "type":        "symfony-bundle",
+    "version":     "0.1.0",
+    "license":     "MIT",
+    "authors":     [ { "name": "Alexander Mosyagin", "email": "fixnim@gmail.com", "role": "Developer" } ],
+    "autoload":    { "psr-4": { "Polonairs\\SmsiBundle\\": "" } },
+    "require":     { "php": ">=5.5.9" }
+}
