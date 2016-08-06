@@ -20,9 +20,17 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('smsi');
        
-        // Here you should define the parameters that are allowed to
-        // configure your bundle. See the documentation linked above for
-        // more information on that topic.
+        $rootNode
+            ->children()
+                ->scalarNode('login')
+                    ->defaultValue('login')
+                ->end()
+            ->end()
+            ->children()
+                ->scalarNode('password')
+                    ->defaultValue('password')
+                ->end()
+            ->end();
 
         return $treeBuilder;
     }

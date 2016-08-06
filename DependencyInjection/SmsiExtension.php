@@ -14,15 +14,19 @@ use Symfony\Component\DependencyInjection\Loader;
  */
 class SmsiExtension extends Extension
 {
-    /**
-     * {@inheritdoc}
-     */
+    public function getAlias()
+    {
+        return "smsi";
+    }
     public function load(array $configs, ContainerBuilder $container)
     {
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
+        $container->setParameter("polonairs.smsi.login", $config["login"]);
+        $container->setParameter("polonairs.smsi.password", $config["password"]);
+
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
-        $loader->load('services.xml');
+        $loader->load('smsi.xml');
     }
 }
