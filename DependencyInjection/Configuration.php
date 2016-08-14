@@ -30,6 +30,11 @@ class Configuration implements ConfigurationInterface
                 ->scalarNode('password')
                     ->defaultValue('password')
                 ->end()
+            ->end()
+            ->children()
+                ->scalarNode('receiver')
+                    ->defaultValue(null)
+                ->end()
             ->end();
 
         return $treeBuilder;

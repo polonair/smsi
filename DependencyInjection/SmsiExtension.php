@@ -25,6 +25,7 @@ class SmsiExtension extends Extension
 
         $container->setParameter("polonairs.smsi.login", $config["login"]);
         $container->setParameter("polonairs.smsi.password", $config["password"]);
+        $container->setParameter("polonairs.smsi.receiver", $config["receiver"]);
 
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('smsi.xml');
