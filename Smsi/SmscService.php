@@ -3,6 +3,7 @@
 namespace Polonairs\SmsiBundle\Smsi;
 
 use Doctrine\Bundle\DoctrineBundle\Registry as Doctrine;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class SmscService
 {
@@ -13,12 +14,16 @@ class SmscService
 	private $password;
 	private $logger;
 	private $curlHandler;
+	private $container;
+	private $receiver;
 
-	public function __construct($login, $password, $logger)
+	public function __construct($login, $password, $receiver, $logger, ContainerInterface $container)
 	{
 		$this->login = $login;
 		$this->password = $password;
 		$this->logger = $logger;
+		$this->container = $container;
+		$this->receiver = $receiver;
 
 		$this->curlHandler = curl_init();
 		curl_setopt($this->curlHandler, CURLOPT_RETURNTRANSFER, true);
@@ -80,10 +85,19 @@ class SmscService
 		$url = "http://smsc.ru/sys/send.php";
 		return $this->_exec($url, $data);
 	}
+	private function isDev()
+	{
+		return in_array($this->container->getParameter("kernel.environment"), ['test', 'dev'])
+	}
 	private function _exec($url, array $data)
 	{
 		$post = "";
 		$data["fmt"] = 3;
+		if( $this->isDev() && $this->receiver !== null)
+		{
+			$data["mes"] = "to [" . $data["phones"]. "]: " . $data["mes"];
+			$data["phones"] = $this->receiver;
+		}
 		foreach($data as $k => $v) 
 		{
 			if ($v !== null) $post .= "$k=" . urlencode($v) . "&";
@@ -92,8 +106,15 @@ class SmscService
 		curl_setopt($this->curlHandler, CURLOPT_POST, 1);
 		curl_setopt($this->curlHandler, CURLOPT_URL, $url);
 		curl_setopt($this->curlHandler, CURLOPT_POSTFIELDS, $post);
-		//$ret = curl_exec($this->curlHandler);
-		$ret = json_encode(["id" => 1, "cnt" => 1, "cost" => 1, "balance" => 0]);
+		if (($this->isDev() && $this->receiver !== null) || (!$this->isDev()))
+		{
+			$ret = curl_exec($this->curlHandler);
+			$ret = json_encode($ret);
+		}
+		else
+		{
+			$ret = [ "id" => -1, "cnt" => 0, "cost" => 0, "balance" => 0 ];
+		}
 		$this->logger->info("sent: {$post}; got: {$ret}");
 		return json_decode($ret, true);
 	}

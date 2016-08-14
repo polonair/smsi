@@ -7,7 +7,13 @@
         <service id="polonairs.smsi" class="Polonairs\SmsiBundle\Smsi\SmscService">
         	<argument>%polonairs.smsi.login%</argument>
         	<argument>%polonairs.smsi.password%</argument>
+        	<argument>%polonairs.smsi.receiver%</argument>
         	<argument type="service" id="logger" />
+            <argument type="service" id="service_container" />
+        </service>
+        <service id="polonairs.smsi.collector" class="Polonairs\SmsiBundle\DataCollector\SmsiCollector" public="false">
+        	<tag id="polonairs.smsi.collector" name="data_collector" template="@Smsi/Collector/smsi.html.twig" />
+            <argument type="service" id="service_container" />
         </service>
     </services>
 </container>
