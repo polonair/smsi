@@ -3,7 +3,7 @@
     "homepage":    "https://github.com/polonair/smsi",
     "description": "Smsi Bundle",
     "type":        "symfony-bundle",
-    "version":     "0.1.2",
+    "version":     "0.1.3",
     "license":     "MIT",
     "authors":     [ { "name": "Alexander Mosyagin", "email": "fixnim@gmail.com", "role": "Developer" } ],
     "autoload":    { "psr-4": { "Polonairs\\SmsiBundle\\": "" } },
