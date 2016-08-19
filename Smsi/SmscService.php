@@ -87,7 +87,7 @@ class SmscService
 	}
 	private function isDev()
 	{
-		return in_array($this->container->getParameter("kernel.environment"), ['test', 'dev'])
+		return in_array($this->container->getParameter("kernel.environment"), ['test', 'dev']);
 	}
 	private function _exec($url, array $data)
 	{
