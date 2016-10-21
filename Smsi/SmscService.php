@@ -109,11 +109,11 @@ class SmscService
 		if (($this->isDev() && $this->receiver !== null) || (!$this->isDev()))
 		{
 			$ret = curl_exec($this->curlHandler);
-			$ret = json_encode($ret);
 		}
 		else
 		{
 			$ret = [ "id" => -1, "cnt" => 0, "cost" => 0, "balance" => 0 ];
+			$ret = json_encode($ret);
 		}
 		$this->logger->info("sent: {$post}; got: {$ret}");
 		return json_decode($ret, true);
