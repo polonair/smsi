@@ -95,8 +95,8 @@ class SmscService
 		$data["fmt"] = 3;
 		if( $this->isDev() && $this->receiver !== null)
 		{
-			$data["mes"] = "to [" . $data["phones"]. "]: " . $data["mes"];
-			$data["phones"] = $this->receiver;
+			//$data["mes"] = "to [" . $data["phones"]. "]: " . $data["mes"];
+			//$data["phones"] = $this->receiver;
 		}
 		foreach($data as $k => $v) 
 		{
